@@ -49,7 +49,23 @@ def say_hello():
           """
     html += """
           <br>
+          <br>
         </form>
+          <form action="/diss">
+          What's your name? <input type="text" name="person">
+          <input type="submit" value="Submit">
+          <br>
+          <p>Please select an insult:</p>
+    """
+    for i, diss_word in enumerate(DISSES):
+      html += f"""
+          <input id="dissradio{i}" type="radio" name="diss" value="{diss_word}">
+          <label for="dissradio{i}">{diss_word}</label>
+          """
+    html += """
+          <br>
+        </form>
+        <br>
       </body>
     </html>
     """
@@ -62,7 +78,7 @@ def greet_person():
 
     player = request.args.get("person")
 
-    compliment = choice(AWESOMENESS)
+    compliment = request.args.get("compliment")
 
     return """
     <!doctype html>
@@ -73,9 +89,6 @@ def greet_person():
       <body>
         Hi, {}! I think you're {}!
       </body>
-      <br>
-      <br>
-      <a href=\"http://localhost:5000/diss\" >Now click here for the diss route!</a></html>
     </html>
     """.format(player, compliment)
 
@@ -86,7 +99,7 @@ def diss_person():
 
     player = request.args.get("person")
 
-    diss = choice(DISSES)
+    diss = request.args.get("diss")
 
     return """
     <!doctype html>
@@ -98,8 +111,6 @@ def diss_person():
         Hi, {}! I think you're {}!
       </body>
       <br>
-      <br>
-      <a href=\"http://localhost:5000/diss\" >Now click here for the diss route!</a></html>
     </html>
     """.format(player, diss)
 
